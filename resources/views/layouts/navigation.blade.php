@@ -18,6 +18,13 @@
                 </div>
             </div>
 
+           <div class="flex">
+                 <a href="{{ route('post.create') }}" class="flex items-center">
+                    <x-primary-button>
+                        write post
+                    </x-primary-button>
+                </a>
+           
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">
@@ -41,7 +48,6 @@
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
@@ -61,6 +67,8 @@
                     </svg>
                 </button>
             </div>
+           </div>
+
         </div>
     </div>
 

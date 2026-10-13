@@ -11,18 +11,13 @@
                 </div>
             </div>
 
-
             {{-- Bloc des publications --}}
             <div class="mt-6 bg-white border border-gray-200 rounded-xl shadow-sm">
                 <div class="p-5">
-
                     {{-- Grille des posts --}}
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
                         @forelse ($posts as $post)
-
                             <x-post-item :post="$post" />
-
                         @empty
                             <div class="py-12 text-center col-span-full">
                                 <div
@@ -41,7 +36,6 @@
                                 </p>
                             </div>
                         @endforelse
-
                     </div>
                 </div>
             </div>
@@ -50,7 +44,6 @@
                 {{-- {{ $posts->onEachSide(1)->links() }} --}}
                 {{ $posts->onEachSide(1)->links('vendor.pagination.tailwind') }}
             </div>
-
         </div>
     </div>
 </x-app-layout>

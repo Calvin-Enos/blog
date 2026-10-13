@@ -16,7 +16,7 @@ class PostController extends Controller
         //
        
         $posts = Post::orderBy('created_at', 'desc')->paginate(15);
-        return view('dashboard', [
+        return view('post.index', [
             'posts' => $posts,
         ]);
     }
@@ -27,6 +27,9 @@ class PostController extends Controller
     public function create()
     {
         //
+        return view('post.create', [
+            'categories' => Category::all(),
+        ]);
     }
 
     /**
@@ -35,6 +38,7 @@ class PostController extends Controller
     public function store(Request $request)
     {
         //
+        dd($request->all());
     }
 
     /**
