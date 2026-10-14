@@ -26,9 +26,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::get();  
         return view('post.create', [
-            'categories' => Category::all(),
+            'categories' => $categories,
         ]);
     }
 
@@ -37,8 +37,25 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        dd($request->all());
+       request()->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+            'category_id' => 'required|exists:categories,id',
+        ]);
+
+        $imageName = time().'.'.request()->image->getClientOriginalExtension();
+        request()->image->move(public_path('images'), $imageName);
+
+        Post::create([
+            'title' => request('title'),
+            'content' => request('content'),
+            'image' => $imageName,
+            'category_id' => request('category_id'),
+            'user_id' => auth()->id(),
+        ]);
+
+        return redirect()->route('dashboard')->with('success', 'Post created successfully.');
     }
 
     /**
