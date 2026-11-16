@@ -1,17 +1,9 @@
 @props(['post'])
 {{-- Card / bloc du post --}}
 <article class="group bg-white border border-gray-200 rounded-xl
-                                       overflow-hidden shadow-sm hover:shadow-md
-                                       hover:-translate-y-1 transition-all duration-200">
-    {{-- Image --}}
-    <a href="#">
-        <div class="overflow-hidden bg-gray-100">
-            <img src="https://images.unsplash.com/photo-1452784444945-3f422708fe5e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=512&q=80"
-                alt="" class="w-full h-48 object-cover
-                                                   group-hover:scale-105 transition-transform duration-300">
-        </div>
-    </a>
-    {{-- Contenu --}}
+         overflow-hidden shadow-sm hover:shadow-md
+         hover:-translate-y-1 transition-all duration-200">
+  
     <div class="p-5">
         {{-- Catégorie --}}
         @if(isset($post->category))
@@ -29,9 +21,9 @@
             </h2>
         </a>
 
-        {{-- Description --}}
+        {{-- content --}}
         <p class="mb-5 text-sm text-gray-600 leading-6">
-            {{ $post->description ?? 'Découvrez cette publication et son contenu.' }}
+            {{ $post->content ?? 'Découvrez cette publication et son contenu.' }}
         </p>
 
         {{-- Footer du bloc --}}
@@ -50,8 +42,27 @@
                         d="M19 12H5m14 0-4 4m4-4-4-4" />
                 </svg>
                 </x-primary-button>
-                
-            </a>
+                </a>
         </div>
     </div>
+
+    {{-- Image --}}
+    <a href="#">
+        <div class="overflow-hidden bg-gray-100">
+            @if ($post->image)
+                <img
+                    class="w-full h-64 object-cover"
+                    src="{{ Storage::url($post->image) }}"
+                    alt="{{ $post->title }}"
+                >
+            @else
+                <img
+                    class="w-full h-64 object-cover"
+                    src="https://images.unsplash.com/photo-1452784444945-3f422708fe5e?auto=format&fit=crop&w=512&q=80"
+                    alt="Image par défaut"
+                >
+            @endif
+        </div>
+    </a>
+
 </article>

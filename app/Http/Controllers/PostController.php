@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\Category;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 class PostController extends Controller
 {
     /**
@@ -14,7 +15,6 @@ class PostController extends Controller
     public function index()
     {
         //
-       
         $posts = Post::orderBy('created_at', 'desc')->paginate(15);
         return view('post.index', [
             'posts' => $posts,
@@ -37,23 +37,24 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-       request()->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+      $data = $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'title' => 'required|string|max:255',
             'content' => 'required|string',
             'category_id' => 'required|exists:categories,id',
+            'published_at'=> 'nullable|datetime',
         ]);
 
-        $imageName = time().'.'.request()->image->getClientOriginalExtension();
-        request()->image->move(public_path('images'), $imageName);
+         $image = $request->file('image');
+         $imagePath = $image->store('posts', 'public');
 
-        Post::create([
-            'title' => request('title'),
-            'content' => request('content'),
-            'image' => $imageName,
-            'category_id' => request('category_id'),
-            'user_id' => auth()->id(),
-        ]);
+        $data['image'] = $imagePath;
+        $data['user_id'] = Auth::id(); // Add the authenticated user's ID to the data array
+        $data['slug'] = Str::slug($data['title']); // Generate a slug from the title
+        $data['image'] = $request->file('image')->store('posts', 'public');
+        
+
+        Post::create($data);
 
         return redirect()->route('dashboard')->with('success', 'Post created successfully.');
     }

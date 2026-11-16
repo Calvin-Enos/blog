@@ -2,7 +2,7 @@
     <div class="py-4">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-8">
-                <form action="{{ route('post.store') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('post.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <!-- image -->
                     <div class="mt-4">
@@ -15,9 +15,7 @@
                     <!-- title -->
                     <div class="mt-4">
                         <x-input-label for="title" :value="__('Title')" />
-                        <x-text-input id="title" class="block mt-1 w-full" 
-                        type="text" name="title"
-                            :value="old('title')" required autofocus />
+                        <x-text-input id="title" class="block mt-1 w-full" type="text" name="title" :value="old('title')" required autofocus />
                         <x-input-error :messages="$errors->get('title')" class="mt-2" />
                     </div>
 
@@ -28,7 +26,7 @@
                         class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full">
                             <option value="">Select a category</option>
                             @foreach($categories as $category)
-                                <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                <option value="{{ $category->id }}" @selected(old('category_id') == $category->id)>
                                     {{ $category->name }}
                                 </option>
                             @endforeach
@@ -39,17 +37,14 @@
                     <!-- content -->
                     <div class="mt-4">
                         <x-input-label for="content" :value="__('Content')" />
-                        <x-text-input-area id="content" class="block mt-1 w-full" name="content" :value="old('content')"
-                            required />
+                        <x-text-input-area id="content" class="block mt-1 w-full" name="content" :value="old('content')" required autofocus/>
                         <x-input-error :messages="$errors->get('content')" class="mt-2" />
                     </div>
                     <x-primary-button class="mt-4">
-                        Submit
+                     Submit
                     </x-primary-button>
-
                 </form>
             </div>
-
         </div>
     </div>
 </x-app-layout>
