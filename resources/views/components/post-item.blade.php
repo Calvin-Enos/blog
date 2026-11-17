@@ -13,7 +13,7 @@
         @endif
 
         {{-- Titre --}}
-        <a href="#">
+        <a href="">
             <h2 class="mb-2 text-xl font-semibold text-gray-900
                         leading-tight hover:text-blue-600
                         transition-colors">
@@ -47,7 +47,7 @@
     </div>
 
     {{-- Image --}}
-    <a href="#">
+    {{-- <a href="#">
         <div class="overflow-hidden bg-gray-100">
             @if ($post->image)
                 <img
@@ -63,6 +63,11 @@
                 >
             @endif
         </div>
-    </a>
+    </a> --}}
 
+{{-- Image --}}
+    <a href="#">
+        <img class="w-48 h-full max-h-64 object-cover rounded-r-lg" 
+            src="{{ Storage::url($post->image) }}" alt="{{ $post->title }}">
+    </a>
 </article>

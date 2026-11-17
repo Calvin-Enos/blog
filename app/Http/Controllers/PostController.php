@@ -7,6 +7,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\PostCreateRequest;
 class PostController extends Controller
 {
     /**
@@ -35,27 +36,21 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PostCreateRequest $request)
     {
-      $data = $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'category_id' => 'required|exists:categories,id',
-            'published_at'=> 'nullable|datetime',
-        ]);
-
-         $image = $request->file('image');
-         $imagePath = $image->store('posts', 'public');
-
-        $data['image'] = $imagePath;
+        $data = $request->validated();
+        $image = $data['image'];
+        // unset($data['image']); // Remove the image from the data array to avoid mass assignment issues
         $data['user_id'] = Auth::id(); // Add the authenticated user's ID to the data array
         $data['slug'] = Str::slug($data['title']); // Generate a slug from the title
+
+        $imagePath = $image->store('posts', 'public');
+        $data['image'] = $imagePath;
+        $image = $request->file('image');
         $data['image'] = $request->file('image')->store('posts', 'public');
         
 
         Post::create($data);
-
         return redirect()->route('dashboard')->with('success', 'Post created successfully.');
     }
 
@@ -64,7 +59,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return 'Works ' . $post->slug;
     }
 
     /**
