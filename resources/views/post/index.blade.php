@@ -10,7 +10,6 @@
                     </x-category-tabs>
                 </div>
             </div>
-
             {{-- Bloc des publications --}}
             <div class="mt-6 bg-white border border-gray-200 rounded-xl shadow-sm">
                 <div class="p-5">

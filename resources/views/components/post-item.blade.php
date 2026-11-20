@@ -13,26 +13,25 @@
         @endif
 
         {{-- Titre --}}
-        <a href="">
-            <h2 class="mb-2 text-xl font-semibold text-gray-900
-                        leading-tight hover:text-blue-600
-                        transition-colors">
+        <a href="{{ route('post.show', [
+            'username' => $post->user->username, 
+            'post' => $post->slug
+            ]) }}">
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 leading-tight hover:text-blue-600 transition-colors">
                 {{ $post->title ?? 'Titre de la publication' }}
-            </h2>
+            </h5>
         </a>
 
         {{-- content --}}
-        <p class="mb-5 text-sm text-gray-600 leading-6">
-            {{ $post->content ?? 'Découvrez cette publication et son contenu.' }}
+        <p class="mb-3 text-sm text-gray-600 leading-6">
+            {{ Str::words($post->content, 20, ' ...') ?? 'Découvrez cette publication et son contenu.' }}
         </p>
 
         {{-- Footer du bloc --}}
         <div class="flex items-center justify-between">
-
             <span class="text-xs text-gray-400">
                 {{ $post->created_at?->format('d M Y') }}
             </span>
-
             <a href="#">
                <x-primary-button>
                     Lire plus
@@ -47,27 +46,22 @@
     </div>
 
     {{-- Image --}}
-    {{-- <a href="#">
+    <a href="#">
         <div class="overflow-hidden bg-gray-100">
             @if ($post->image)
-                <img
-                    class="w-full h-64 object-cover"
-                    src="{{ Storage::url($post->image) }}"
-                    alt="{{ $post->title }}"
-                >
+                <img class="w-full h-64 object-cover" src="{{ Storage::url($post->image) }}"alt="{{ $post->title }}">
             @else
                 <img
                     class="w-full h-64 object-cover"
                     src="https://images.unsplash.com/photo-1452784444945-3f422708fe5e?auto=format&fit=crop&w=512&q=80"
-                    alt="Image par défaut"
-                >
+                    alt="Image par défaut">
             @endif
         </div>
-    </a> --}}
+    </a>
 
 {{-- Image --}}
-    <a href="#">
+    {{-- <a href="#">
         <img class="w-48 h-full max-h-64 object-cover rounded-r-lg" 
             src="{{ Storage::url($post->image) }}" alt="{{ $post->title }}">
-    </a>
+    </a> --}}
 </article>

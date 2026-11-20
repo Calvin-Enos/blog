@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 
 #[Fillable(['name', 'email', 'password'])]
 #[Hidden(['password', 'remember_token'])]
@@ -25,9 +26,6 @@ class User extends Authenticatable
         'email',
         'password',
     ];
-
-    
-
     /**
      * Get the attributes that should be cast.
      *
@@ -39,5 +37,18 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function imageUrl()
+    {
+        if ($this->image) {
+            return Storage::url( $this->image);
+        } 
+        
+        return null;
+
+        // } else {
+        //     return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=random';
+        // }
     }
 }
