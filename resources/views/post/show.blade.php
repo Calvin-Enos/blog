@@ -6,17 +6,14 @@
 
                 {{-- User Avatar --}}
                 <div class="flex items-center gap-4">
-                    @if ($post->user->image)
-                        <img src="{{ $post->user->imageUrl() }}" alt="{{ $post->user->name }}"
-                            class="w-12 h-12 rounded-full object-cover">
-                    @else
-                        <img src="https://tamilnaducouncil.ac.in/wp-content/uploads/2020/04/dummy-avatar.jpg"
-                            alt="Default User Image" class="w-12 h-12 rounded-full object-cover">
-                    @endif
+                    <x-user-avatar :user="$post->user" />
 
                     <div>
                         <div class="flex gap-2">
-                            <h3>{{ $post->user->name }}</h3>
+                            <a href="{{ route('profile.show',
+                             $post->user) }}" class="hover:underline">
+                                {{ $post->user->name }}
+                            </a>
                             &middot;
                             <a href="#" class="text-emerald-600">Follow</a>
                         </div>
@@ -59,9 +56,7 @@
 
 
 
-
             </div>
-
 
 
 

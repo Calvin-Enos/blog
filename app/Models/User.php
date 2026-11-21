@@ -39,6 +39,11 @@ class User extends Authenticatable
         ];
     }
 
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
     public function imageUrl()
     {
         if ($this->image) {
@@ -46,9 +51,5 @@ class User extends Authenticatable
         } 
         
         return null;
-
-        // } else {
-        //     return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=random';
-        // }
     }
 }

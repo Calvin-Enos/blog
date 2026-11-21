@@ -13,7 +13,7 @@ Route::get('/', function () {
 
 
 
-Route::get('/@{user}', [PublicProfileController::class, 'show'])->name('profile.show');
+Route::get('/@{user:username}', [PublicProfileController::class, 'show'])->name('profile.show');
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
